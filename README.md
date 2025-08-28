@@ -18,6 +18,16 @@ qwen-mcp-server [--port PORT]
 
 By default, the server will run on port 9999. You can specify a different port using the `--port` option.
 
+## Available Tools
+
+The Qwen MCP Server provides the following tools:
+
+1. **calculate** - Performs basic arithmetic operations (add, subtract, multiply, divide)
+2. **echo** - Echoes input text
+3. **chat** - Engages in a chat conversation with Qwen
+4. **analyzeFile** - Analyzes a file using Qwen's capabilities
+5. **changeFile** - Modifies a file based on instructions using Qwen's capabilities
+
 ## Integration
 To use this server with Claude Desktop, add the following to your `mcp.json`:
 
