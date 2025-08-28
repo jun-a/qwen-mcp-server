@@ -14,6 +14,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from qwen_mcp_server.server import MCPServer, calculate_handler
 
+async def on_start(server, port):
+    """Callback function called when server starts"""
+    print(f"Qwen MCPサーバーがポート{port}で実行中です")
+    print("定義されたツール:")
+    for name, tool_info in server.tools.items():
+        print(f"- {name}: {tool_info['tool']['description']}")
+
 def main():
     """Main entry point for the MCP server"""
     parser = argparse.ArgumentParser(description="Qwen MCP Server")
@@ -43,14 +50,8 @@ def main():
     }, calculate_handler)
     
     # サーバーを起動
-    async def on_start():
-        print(f"Qwen MCPサーバーがポート{args.port}で実行中です")
-        print("定義されたツール:")
-        for name, tool_info in server.tools.items():
-            print(f"- {name}: {tool_info['tool']['description']}")
-    
     print(f"Qwen MCPサーバーをポート{args.port}で起動します...")
-    asyncio.run(server.listen(on_start))
+    asyncio.run(server.listen(lambda: on_start(server, args.port)))
 
 if __name__ == "__main__":
     main()

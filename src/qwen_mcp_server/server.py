@@ -61,7 +61,11 @@ class MCPServer:
         print(f"Qwen MCPサーバーがポート{self.port}で実行中です")
         
         if callback:
-            callback()
+            # コールバックがコルーチンの場合、適切に処理する
+            if asyncio.iscoroutinefunction(callback):
+                await callback()
+            else:
+                callback()
         
         await server.wait_closed()
     
