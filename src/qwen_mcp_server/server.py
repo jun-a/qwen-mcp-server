@@ -82,7 +82,9 @@ class MCPServer:
         
         # 異なるメソッドを処理
         method = request.get("method")
-        if method == "tools/list":
+        if method == "initialize":
+            return await self._handle_initialize(request)
+        elif method == "tools/list":
             return self._handle_list_tools(request)
         elif method == "tools/call":
             return await self._handle_call_tool(request)
@@ -100,6 +102,29 @@ class MCPServer:
         return {
             "jsonrpc": "2.0",
             "result": {"tools": tools},
+            "id": request.get("id")
+        }
+    
+    async def _handle_initialize(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """initializeリクエストを処理"""
+        import sys
+        print("Initialize request received", file=sys.stderr)
+        
+        response = {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {
+                "tools": {}
+            },
+            "serverInfo": {
+                "name": "qwen-mcp-server",
+                "version": "1.0.0"
+            }
+        }
+        
+        print(f"Sending response: {response}", file=sys.stderr)
+        return {
+            "jsonrpc": "2.0",
+            "result": response,
             "id": request.get("id")
         }
     
@@ -136,16 +161,27 @@ class MCPServer:
                 str(error)
             )
     
-    def _create_error_response(self, id, code, message, data) -> Dict[str, Any]:
-        """エラーレスポンスを作成"""
+    async def _handle_initialize(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """initializeリクエストを処理"""
+        import sys
+        print("Initialize request received", file=sys.stderr)
+        
+        response = {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {
+                "tools": {}
+            },
+            "serverInfo": {
+                "name": "qwen-mcp-server",
+                "version": "1.0.0"
+            }
+        }
+        
+        print(f"Sending response: {response}", file=sys.stderr)
         return {
             "jsonrpc": "2.0",
-            "error": {
-                "code": code,
-                "message": message,
-                "data": data
-            },
-            "id": id
+            "result": response,
+            "id": request.get("id")
         }
     
     def close(self) -> None:
