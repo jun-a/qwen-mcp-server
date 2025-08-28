@@ -32,11 +32,13 @@ def main():
     # 新しいMCPサーバーインスタンスを作成
     server = MCPServer(args.port)
     
-    async def start_callback():
-        await on_start(server, args.port)
+    def start_callback():
+        import asyncio
+        # For synchronous callback, we need to run the async function in a new event loop
+        asyncio.run(on_start(server, args.port))
     
     print(f"Qwen MCPサーバーをポート{args.port}で起動します...", file=sys.stderr)
-    # asyncio.runを使用せずに直接実行
+    # Use direct synchronous execution
     server.listen(start_callback)
 
 if __name__ == "__main__":

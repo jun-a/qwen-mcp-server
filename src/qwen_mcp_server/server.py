@@ -26,17 +26,19 @@ class MCPServer:
         decorated_handler = mcp.tool(name=tool_name, description=tool_description)(handler)
         self.tools[tool_name] = {"tool": tool, "handler": decorated_handler}
     
-    async def listen(self, callback: Optional[Callable] = None) -> None:
+    def listen(self, callback: Optional[Callable] = None) -> None:
         """サーバーを起動"""
         if callback:
-            # コールバックがコルーチンの場合、適切に処理する
+            # For synchronous execution, we need to handle the callback appropriately
+            # Since we're not in an async context here, we'll call it directly if it's not async
+            # or run it in a new event loop if it is async
             if asyncio.iscoroutinefunction(callback):
-                await callback()
+                asyncio.run(callback())
             else:
                 callback()
         
-        # FastMCPサーバーをSTDIOで実行（非同期版）
-        await mcp.run_async(transport='stdio')
+        # FastMCPサーバーをSTDIOで実行（同期版）
+        mcp.run(transport='stdio')
     
     def close(self) -> None:
         """サーバーを閉じる"""
