@@ -5,7 +5,7 @@ Python implementation of the Qwen MCP Server that can be installed as a package 
 ## Installation
 
 ```bash
-cd /qwen-mcp-server
+cd qwen-mcp-server
 uv build
 pip install dist/*.whl
 ```
