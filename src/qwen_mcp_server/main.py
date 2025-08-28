@@ -19,7 +19,7 @@ async def on_start(server, port):
     print(f"Qwen MCPサーバーがポート{port}で実行中です", file=sys.stderr)
     print("定義されたツール:", file=sys.stderr)
     # FastMCPからツールリストを取得
-    tools = mcp.list_tools()
+    tools = await mcp.list_tools()
     for tool in tools:
         print(f"- {tool.name}: {tool.description}", file=sys.stderr)
 
