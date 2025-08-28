@@ -50,8 +50,11 @@ def main():
     }, calculate_handler)
     
     # サーバーを起動
+    async def start_callback():
+        await on_start(server, args.port)
+    
     print(f"Qwen MCPサーバーをポート{args.port}で起動します...")
-    asyncio.run(server.listen(lambda: on_start(server, args.port)))
+    asyncio.run(server.listen(start_callback))
 
 if __name__ == "__main__":
     main()
