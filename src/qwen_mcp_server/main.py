@@ -36,7 +36,8 @@ def main():
         await on_start(server, args.port)
     
     print(f"Qwen MCPサーバーをポート{args.port}で起動します...", file=sys.stderr)
-    asyncio.run(server.listen(start_callback))
+    # asyncio.runを使用せずに直接実行
+    server.listen(start_callback)
 
 if __name__ == "__main__":
     main()

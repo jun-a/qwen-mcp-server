@@ -35,8 +35,8 @@ class MCPServer:
             else:
                 callback()
         
-        # FastMCPサーバーをSTDIOで実行
-        mcp.run(transport='stdio')
+        # FastMCPサーバーをSTDIOで実行（非同期版）
+        await mcp.run_async(transport='stdio')
     
     def close(self) -> None:
         """サーバーを閉じる"""
