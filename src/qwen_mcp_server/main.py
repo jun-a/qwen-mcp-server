@@ -16,12 +16,12 @@ from qwen_mcp_server.server import MCPServer, calculate, mcp
 
 async def on_start(server, port):
     """Callback function called when server starts"""
-    print(f"Qwen MCPサーバーがポート{port}で実行中です")
-    print("定義されたツール:")
+    print(f"Qwen MCPサーバーがポート{port}で実行中です", file=sys.stderr)
+    print("定義されたツール:", file=sys.stderr)
     # FastMCPからツールリストを取得
     tools = mcp.list_tools()
     for tool in tools:
-        print(f"- {tool.name}: {tool.description}")
+        print(f"- {tool.name}: {tool.description}", file=sys.stderr)
 
 def main():
     """Main entry point for the MCP server"""
@@ -35,7 +35,7 @@ def main():
     async def start_callback():
         await on_start(server, args.port)
     
-    print(f"Qwen MCPサーバーをポート{args.port}で起動します...")
+    print(f"Qwen MCPサーバーをポート{args.port}で起動します...", file=sys.stderr)
     asyncio.run(server.listen(start_callback))
 
 if __name__ == "__main__":
