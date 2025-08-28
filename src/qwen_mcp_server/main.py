@@ -13,6 +13,8 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from qwen_mcp_server.server import MCPServer, calculate, mcp
+# Import the new tools
+from qwen_mcp_server.tools import chat, analyzeFile, changeFile
 
 async def on_start(server, port):
     """Callback function called when server starts"""

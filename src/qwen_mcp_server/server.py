@@ -5,9 +5,6 @@ from mcp.server.fastmcp import FastMCP
 # Initialize FastMCP server
 mcp = FastMCP("qwen-mcp-server")
 
-# Import the new tools
-from qwen_mcp_server.tools import chat, analyzeFile, changeFile
-
 class MCPServer:
     def __init__(self, port: int = 9999):
         self.port = port
